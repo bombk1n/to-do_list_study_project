@@ -1,4 +1,4 @@
-package tasks;
+package entity;
 
 
 import java.time.LocalDate;
@@ -51,6 +51,14 @@ public class Task {
 
     public void setCompleted(boolean completed) {
         isCompleted = completed;
+    }
+
+    public Task(int id, String name, LocalDate dueDate, String description, boolean isCompleted) {
+        this.id = nextId++;
+        this.name = name;
+        this.dueDate = dueDate;
+        this.description = description;
+        this.isCompleted = isCompleted;
     }
 
     public static Task createTask(String name, String description, LocalDate dueDate){

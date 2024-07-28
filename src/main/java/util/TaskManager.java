@@ -1,7 +1,8 @@
-package tasks;
+package util;
 
 
 
+import entity.Task;
 import features.*;
 import java.util.*;
 
@@ -10,7 +11,7 @@ public class TaskManager {
     public static ArrayList<Task> tasks = new ArrayList<>();
     public static ArrayList<Task> completedTasks = new ArrayList<>();
     public static boolean isRunning = true;
-    private static final Scanner sca = new Scanner(System.in); // створення Scanner один раз
+    private static final Scanner sca = new Scanner(System.in);
 
     public void start() {
         printTitle();
@@ -22,7 +23,7 @@ public class TaskManager {
     }
 
     public void executeAction(int actionNumber) {
-        Actions action;
+        Actions action = null;
         switch (actionNumber) {
 
             case Actions.ADD_TASK:

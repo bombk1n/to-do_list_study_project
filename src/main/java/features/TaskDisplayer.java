@@ -1,7 +1,8 @@
 package features;
 
 
-import tasks.*;
+import entity.Task;
+import util.*;
 
 
 public class TaskDisplayer extends Actions {

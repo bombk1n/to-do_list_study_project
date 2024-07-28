@@ -1,7 +1,8 @@
 package features;
 
 
-import tasks.*;
+import entity.Task;
+import util.*;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;

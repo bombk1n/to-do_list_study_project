@@ -1,7 +1,8 @@
 package features;
 
 
-import tasks.*;
+import entity.Task;
+import util.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -32,14 +33,14 @@ public class TaskAdder extends Actions {
                 if (elements.length == 3) {
                     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                     try {
-                        LocalDate.parse(elements[2].trim(), dtf); // Перевірка дати
-                        return input; // Якщо дата правильна, виконуємо дію
+                        LocalDate.parse(elements[2].trim(), dtf);
+                        return input;
 
                     } catch (DateTimeParseException e) {
                         System.out.println("Invalid date format. Please use the format dd-MM-yyyy.");
                     }
                 } else if (elements.length == 1 || elements.length == 2) {
-                    return input; // Для інших варіантів (name, name+description)
+                    return input;
 
                 } else {
                     System.out.println("Invalid input format. Please follow the instructions.");
