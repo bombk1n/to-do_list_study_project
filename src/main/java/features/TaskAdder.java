@@ -27,7 +27,7 @@ public class TaskAdder extends Actions {
 
     @Override
     public String checkInput() {
-        while (true) {
+        while (true)  {
             System.out.println();
             System.out.println("Enter task information:");
             String input = sca.nextLine().trim();
