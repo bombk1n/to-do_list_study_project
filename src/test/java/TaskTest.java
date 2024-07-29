@@ -18,7 +18,7 @@ public class TaskTest {
     }
     @Test
     void getId(){
-        task.setId(1);
+        task.setId(1L);
         assertEquals(1,task.getId());
     }
     @Test

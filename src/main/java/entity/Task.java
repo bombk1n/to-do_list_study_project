@@ -6,14 +6,13 @@ import java.time.format.DateTimeFormatter;
 
 
 public class Task {
-    private static int nextId = 1;
-    private int id;
+    private Long id;
     private String name;
     private String description;
     private LocalDate dueDate;
     private boolean isCompleted = false;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -33,7 +32,7 @@ public class Task {
         return isCompleted;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -53,23 +52,26 @@ public class Task {
         isCompleted = completed;
     }
 
-    public Task(int id, String name, LocalDate dueDate, String description, boolean isCompleted) {
-        this.id = nextId++;
+
+
+    public Task() {
+    }
+
+    public Task(String name, String description, LocalDate dueDate) {
         this.name = name;
-        this.dueDate = dueDate;
         this.description = description;
+        this.dueDate = dueDate;
+        isCompleted = false;
+    }
+
+    public Task(Long id, String name, String description, LocalDate dueDate, boolean isCompleted) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.dueDate = dueDate;
         this.isCompleted = isCompleted;
     }
 
-    public static Task createTask(String name, String description, LocalDate dueDate){
-        Task task = new Task();
-        task.setId(nextId++);
-        task.setName(name);
-        task.setDescription(description);
-        task.setDueDate(dueDate);
-
-        return task;
-    }
 
 
     @Override
