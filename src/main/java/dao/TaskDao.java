@@ -39,6 +39,10 @@ public class TaskDao {
 
     private static final String FIND_BY_ID_SQL = FIND_ALL_SQL + " WHERE id = ?;";
 
+    public static final String SIZE_TABLE_SQL = """
+            SELECT COUNT(*) FROM tasks;
+            """;
+
     private TaskDao() {
     }
 
@@ -129,7 +133,7 @@ public class TaskDao {
             for (int i = 0; i < params.size(); i++) {
                 prepareStatement.setObject(i + 1, params.get(i));
             }
-            System.out.println(prepareStatement);
+
             ResultSet resultSet = prepareStatement.executeQuery();
             List<Task> tasks = new ArrayList<>();
             while (resultSet.next()) {
@@ -167,9 +171,26 @@ public class TaskDao {
         );
     }
 
+    public int size() {
+        try (Connection connection = ConnectionManager.get();
+             PreparedStatement preparedStatement = connection.prepareStatement(SIZE_TABLE_SQL);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            } else {
+                throw new DaoException(new RuntimeException("Failed to retrieve count from tasks table."));
+            }
+
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
     public static TaskDao getInstance() {
         return INSTANCE;
     }
+
 
 
 

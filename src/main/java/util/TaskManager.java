@@ -2,6 +2,7 @@ package util;
 
 
 
+import dao.TaskDao;
 import entity.Task;
 import features.*;
 import java.util.*;
@@ -12,6 +13,7 @@ public class TaskManager {
     public static ArrayList<Task> completedTasks = new ArrayList<>();
     public static boolean isRunning = true;
     private static final Scanner sca = new Scanner(System.in);
+    private static final TaskDao taskDao = TaskDao.getInstance();
 
     public void start() {
         printTitle();
@@ -63,12 +65,12 @@ public class TaskManager {
                 break;
 
             case Actions.DISPLAY_ALL_TASKS:
-                if (tasks.size() > 0 || completedTasks.size() > 0) {
+                if (taskDao.size() > 0) {
                     action = new TaskDisplayer();
                     action.showActionsInformation();
                     action.executeAction(null);
                 } else {
-                    System.out.println("Your list is empty, add tasks first! ");
+                    System.out.println("There are no tasks, add task first! ");
                 }
                 break;
 
@@ -111,13 +113,19 @@ public class TaskManager {
 
     public int readAction() {
         List<Integer> listOfActions = List.of(1, 2, 3, 4, 5, 6, 7);
+        System.out.println("Enter a number:");
         while (true) {
-            System.out.println("Enter a number:");
-            int actionNumber = sca.nextInt();
-            if (listOfActions.contains(actionNumber)) {
-                return actionNumber;
-            } else {
-                System.out.println("FATAL: The entered number is incorrect");
+            try {
+                int actionNumber = sca.nextInt();
+
+                if (listOfActions.contains(actionNumber)) {
+                    return actionNumber;
+                } else {
+                    System.out.println("FATAL: The entered number is incorrect");
+                }
+            }catch (InputMismatchException e) {
+                    System.out.println("Please enter a number!");
+                    sca.next();
             }
         }
     }

@@ -2,6 +2,7 @@ package features;
 
 
 
+import dao.TaskDao;
 import entity.Task;
 import util.*;
 import java.util.Iterator;
@@ -19,7 +20,7 @@ public class TaskMarker extends Actions{
     @Override
     public String checkInput() {
         while(true){
-            System.out.println("");
+            System.out.println();
             System.out.print("Enter task id:");
             Scanner sca = new Scanner(System.in);
             String input = sca.nextLine();
@@ -34,33 +35,13 @@ public class TaskMarker extends Actions{
 
     @Override
     public void executeAction(String s) {
+        TaskDao taskDao = TaskDao.getInstance();
         int taskId = Integer.parseInt(s);
+        Task task = taskDao.findById(taskId);
+        task.setCompleted(!task.isCompleted());
+        taskDao.update(task);
+        System.out.println("Task with id " + taskId +" marked as "+ (task.isCompleted() ? "completed" : "uncompleted"));
 
-
-        Iterator<Task> iterator = TaskManager.tasks.iterator();
-        while (iterator.hasNext()) {
-            Task task = iterator.next();
-            if (task.getId() == taskId) {
-                task.setCompleted(true);
-                System.out.println("Task " + taskId + " marked as completed.");
-                iterator.remove();
-                TaskManager.completedTasks.add(task);
-                return;
-            }
-        }
-
-
-        iterator = TaskManager.completedTasks.iterator();
-        while (iterator.hasNext()) {
-            Task task = iterator.next();
-            if (task.getId() == taskId) {
-                task.setCompleted(false);
-                System.out.println("Task " + taskId + " marked as uncompleted.");
-                iterator.remove();
-                TaskManager.tasks.add(task);
-                return;
-            }
-        }
 
         System.out.println("Task with id " + taskId + " not found.");
     }
