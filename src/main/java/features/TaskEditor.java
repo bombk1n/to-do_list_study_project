@@ -21,7 +21,7 @@ public class TaskEditor extends Actions {
         System.out.println();
         System.out.println("To edit a task please enter id and then use the construction:");
         System.out.println("[name],[description],[due date (format: dd-mm-yyyy)]");
-        System.out.println("insert a [-] when an update is not needed to that specific parameter");
+        System.out.println("insert a \"_\" when an update is not needed to that specific parameter");
         System.out.println();
         System.out.println("Enter 0 to return");
     }

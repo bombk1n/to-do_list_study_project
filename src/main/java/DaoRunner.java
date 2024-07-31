@@ -11,7 +11,7 @@ public class DaoRunner {
         TaskDao taskDao = TaskDao.getInstance();
 
 
-        List<Task> uncompletedTasks = taskDao.findAll(new TicketFilter(0,0,"a",null,null));
+        List<Task> uncompletedTasks = taskDao.findAll(new TicketFilter(100,0,"a","a",null),null,false);
         for (Task task : uncompletedTasks) {
             System.out.println(task);
         }

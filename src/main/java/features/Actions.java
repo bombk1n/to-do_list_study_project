@@ -6,8 +6,7 @@ public abstract class Actions {
     public static final int REMOVE_TASK = 3;
     public static final int EDIT_TASK = 4;
     public static final int DISPLAY_ALL_TASKS = 5;
-    public static final int SORT_TASKS_BY_DATE = 6;
-    public static final int EXIT = 7;
+    public static final int EXIT = 6;
 
 
 

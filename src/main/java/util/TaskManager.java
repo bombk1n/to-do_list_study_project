@@ -65,22 +65,11 @@ public class TaskManager {
                 break;
 
             case Actions.DISPLAY_ALL_TASKS:
-                if (taskDao.size() > 0) {
                     action = new TaskDisplayer();
                     action.showActionsInformation();
-                    action.executeAction(null);
-                } else {
-                    System.out.println("There are no tasks, add task first! ");
-                }
-                break;
-
-            case Actions.SORT_TASKS_BY_DATE:
-                if (tasks.size() > 0 || completedTasks.size() > 0) {
-                    action = new TaskSorterByDate();
-                    action.showActionsInformation();
-                    action.executeAction(null);
-                } else {
-                    System.out.println("Your list is empty, add tasks first! ");
+                    String displayer = action.checkInput();
+                if (!displayer.equals("0")) {
+                    action.executeAction(displayer);
                 }
                 break;
 
@@ -106,13 +95,12 @@ public class TaskManager {
         System.out.println("3. Remove task ");
         System.out.println("4. Edit task");
         System.out.println("5. Display all tasks");
-        System.out.println("6. Sort tasks by date");
-        System.out.println("7. Exit");
+        System.out.println("6. Exit");
         System.out.println();
     }
 
     public int readAction() {
-        List<Integer> listOfActions = List.of(1, 2, 3, 4, 5, 6, 7);
+        List<Integer> listOfActions = List.of(1, 2, 3, 4, 5, 6);
         System.out.println("Enter a number:");
         while (true) {
             try {

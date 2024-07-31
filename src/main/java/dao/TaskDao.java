@@ -95,20 +95,20 @@ public class TaskDao {
     }
 
     public List<Task> findAll() {
-        try (Connection connection = ConnectionManager.get();
-             PreparedStatement prepareStatement = connection.prepareStatement(FIND_ALL_SQL)) {
-            ResultSet resultSet = prepareStatement.executeQuery();
-            List<Task> tasks = new ArrayList<>();
-            while (resultSet.next()) {
-                tasks.add(createTask(resultSet));
+            try (Connection connection = ConnectionManager.get();
+                 PreparedStatement prepareStatement = connection.prepareStatement(FIND_ALL_SQL)) {
+                ResultSet resultSet = prepareStatement.executeQuery();
+                List<Task> tasks = new ArrayList<>();
+                while (resultSet.next()) {
+                    tasks.add(createTask(resultSet));
+                }
+                return tasks;
+            } catch (SQLException e) {
+                throw new DaoException(e);
             }
-            return tasks;
-        } catch (SQLException e) {
-            throw new DaoException(e);
-        }
     }
 
-    public List<Task> findAll(TicketFilter filter){
+    public List<Task> findAll(TicketFilter filter, String orderBy, boolean ascending){
         List<Object> params = new ArrayList<>();
         List<String> whereSql = new ArrayList<>();
         if(filter.name() !=null){
@@ -126,7 +126,8 @@ public class TaskDao {
         params.add(filter.limit());
         params.add(filter.offset());
         String where = whereSql.isEmpty() ? "" : " WHERE " + String.join(" AND ", whereSql);
-        String sql = FIND_ALL_SQL + where + " LIMIT ? OFFSET ?";
+        String order = (orderBy != null && !orderBy.isEmpty()) ? " ORDER BY " + orderBy + (ascending ? " ASC " : " DESC ") : "";
+        String sql = FIND_ALL_SQL + where + order + " LIMIT ? OFFSET ?";
 
         try (Connection connection = ConnectionManager.get();
              PreparedStatement prepareStatement = connection.prepareStatement(sql)) {
@@ -139,6 +140,7 @@ public class TaskDao {
             while (resultSet.next()) {
                 tasks.add(createTask(resultSet));
             }
+
 
             return tasks;
         } catch (SQLException e) {

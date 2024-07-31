@@ -25,11 +25,14 @@ public class TaskRemover extends Actions{
             System.out.print("Enter task id:");
             Scanner sca = new Scanner(System.in);
             String input = sca.nextLine();
+            if(input.equals("0")){
+                return input;
+            }
             try {
                 int id = Integer.parseInt(input);
                 Task task = instance.findById(id);
                 if(task == null){
-                    System.out.println("Enter a valid id");
+                    System.out.println("Task with ID " + id + " does not exist.");
                     continue;
                 }
                 return input;

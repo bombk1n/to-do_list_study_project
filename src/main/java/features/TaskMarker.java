@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 public class TaskMarker extends Actions{
+    private static final TaskDao instance = TaskDao.getInstance();
     @Override
     public void showActionsInformation() {
         System.out.println();
@@ -24,8 +25,18 @@ public class TaskMarker extends Actions{
             System.out.print("Enter task id:");
             Scanner sca = new Scanner(System.in);
             String input = sca.nextLine();
+
+            if(input.equals("0")){
+                return input;
+            }
+
             try {
                 int id = Integer.parseInt(input);
+                Task task = instance.findById(id);
+                if (task == null) {
+                    System.out.println("Task with ID " + id + " does not exist.");
+                    continue;
+                }
                 return input;
             }catch (Exception e){
                 System.out.println("Enter a valid id");
@@ -35,15 +46,12 @@ public class TaskMarker extends Actions{
 
     @Override
     public void executeAction(String s) {
-        TaskDao taskDao = TaskDao.getInstance();
         int taskId = Integer.parseInt(s);
-        Task task = taskDao.findById(taskId);
+        Task task = instance.findById(taskId);
         task.setCompleted(!task.isCompleted());
-        taskDao.update(task);
+        instance.update(task);
         System.out.println("Task with id " + taskId +" marked as "+ (task.isCompleted() ? "completed" : "uncompleted"));
 
-
-        System.out.println("Task with id " + taskId + " not found.");
     }
 }
 
